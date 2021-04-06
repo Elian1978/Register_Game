@@ -4,10 +4,25 @@
   <strong>Name:</strong>
   <%= @game.name %>
 </p>
+
 <p>
-  <%=link_to 'Rules', @game.rule%>
+  <strong>Download:</strong>
+  <% if @game.rule.attached? %>
+    <%= link_to @game.rule.filename, rails_blob_path(@game.rule, disposition: 'attachment') %>
+  <% end %>
 </p>
 
+<p>
 
+
+
+  <% if @game.pieces.attached? %>
+  <ul class="list-unstyled">
+    <% @game.images.each do |image| %>
+      <li class="m-3"><%= image_tag image.variant(resize:'200x200').processed %></li>  
+    <% end %>
+  </ul>
+
+<% end %>
 <%= link_to 'Edit', edit_game_path(@game) %> |
 <%= link_to 'Back', games_path %>
